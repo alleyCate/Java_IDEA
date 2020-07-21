@@ -5,7 +5,10 @@ package Day10.c_staticField;
  */
 public class Demo2 {
     public static void main(String[] args) {
-        SingleDog singleDog = new SingleDog();
+        SingleDog singleDog1 = new SingleDog("老王");
+        SingleDog singleDog2 = new SingleDog("老李");
+        SingleDog singleDog3 = new SingleDog("老张");
+        SingleDog singleDog4 = new SingleDog("老孙");
     }
 }
 

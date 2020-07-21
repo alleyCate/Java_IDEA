@@ -5,7 +5,7 @@ package Day10.c_staticField;
  */
 public class Demo2 {
     public static void main(String[] args) {
-
+        SingleDog singleDog = new SingleDog();
     }
 }
 

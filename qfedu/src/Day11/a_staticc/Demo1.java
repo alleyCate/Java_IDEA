@@ -1,7 +1,15 @@
 package Day11.a_staticc;
 
-public class Demo1 {
+import java.util.Arrays;
 
+public class Demo1 {
+    public static void main(String[] args) {
+        int[] arr = {1, 3, 5, 7, 9, 2, 4, 6, 8, 10};
+
+        MyArrays.reverse(arr);
+
+        System.out.println(Arrays.toString(arr));
+    }
 }
 
 /**
@@ -17,7 +25,9 @@ class MyArrays {
      */
     public static void reverse(int[] arr) {
         for (int i = 0; i < arr.length / 2; i++) {
-
+            int temp = arr[i];
+            arr[i] = arr[arr.length -1 - i];
+            arr[arr.length - 1 - i] = temp;
         }
     }
 }

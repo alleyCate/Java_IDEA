@@ -12,7 +12,7 @@ public class Student {
      * 【创建】每一个对象时，ID都需要【自动】赋值，赋值的数据有一定的【持久性】
      * 创建 ==> new 构造方法();
      * 自动 ==> 构造代码块，每一次创建对象，使用构造方法一定会执行
-     * 持久性：
+     * 持久性 ==>
      *      1.可以给每一个类对象进行赋值操作，但是又独立于对象之外
      *      2.程序不退出，计数依然存在
      *      3.需要的数据类型int，并且不希望公开
@@ -39,6 +39,12 @@ public class Student {
      * 类对象计数器，每一次创建对象，赋值ID属性，同时自增长
      */
     private static int count = 1;
+
+    //构造代码块
+    {
+        //使用count计数器赋值ID属性，同时count++自增操作
+        id = count++;
+    }
 
     public Student() {
     }
@@ -138,5 +144,20 @@ public class Student {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", mathScore=" + mathScore +
+                ", chnScore=" + chnScore +
+                ", engScore=" + engScore +
+                ", totalScore=" + totalScore +
+                ", rank=" + rank +
+                '}';
     }
 }

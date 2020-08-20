@@ -1,6 +1,7 @@
 package com.system.student.qfedu.manager;
 
 import com.system.student.qfedu.entity.Student;
+import javafx.css.Size;
 
 /**
  * 学生管理类
@@ -12,7 +13,7 @@ public class StudentManager {
      * 保存学生数据的Student类型数组
      * 这里只有一个数组的引用，并没有数组的真实空间
      */
-    private Student[] allStudent;
+    private Student[] allStus;
 
     /**
      * 这里是允许的数组容量的最大值！！！
@@ -25,12 +26,17 @@ public class StudentManager {
     private static final int DEFAULT_CAPACITY = 10;
 
     /**
+     * 数组有效元素计数器，记录当前数组中有多少有效元素
+     */
+    private int size = 0;
+
+    /**
      * 构造方法
      * 这里需要提供一个数组初始化容量进行数据保存和操作
      */
     public StudentManager() {
         //给予初始化容量，可以保存10个学生数据
-        allStudent = new Student[DEFAULT_CAPACITY];
+        allStus = new Student[DEFAULT_CAPACITY];
     }
 
     /**
@@ -43,10 +49,10 @@ public class StudentManager {
         //不允许！！！
         if (initCapacity <= 0 || initCapacity > MAX_ARRAY_SIZE) {
             System.out.println("超出合理范围，给予一个默认的初始化容量使用");
-            allStudent = new Student[DEFAULT_CAPACITY];
+            allStus = new Student[DEFAULT_CAPACITY];
         } else {
             //满足要求，按照用户指定的容量创建对应的数组
-            allStudent = new Student[initCapacity];
+            allStus = new Student[initCapacity];
         }
     }
 
@@ -90,6 +96,16 @@ public class StudentManager {
          *              定义在类内，随着类文件的加载而出现，和对象无关，不管创建多少个StudentManager对象，
          *              都是使用一个计数器。共享资源，会导致代码出现问题。不具备对每一个类的独立性，不可以考虑！
          */
-        return  true;
+        allStus[size] = student;
+        size += 1;
+
+        return true;
     }
+
+    public void show() {
+        for (int i = 0; i < size; i++) {
+            System.out.println(allStus[i]);
+        }
+    }
+
 }

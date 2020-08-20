@@ -1,7 +1,9 @@
 package com.system.student.qfedu.test;
 
 import com.system.student.qfedu.entity.Student;
+import com.system.student.qfedu.manager.StudentManager;
 import org.junit.Test;
+
 
 /**
  * 功能测试类
@@ -25,4 +27,24 @@ public class SystemTest {
         System.out.println(student5);
         System.out.println(student6);
     }
+
+    @Test
+    public void testAdd() {
+        StudentManager studentManager = new StudentManager();
+
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+
+        studentManager.show();
+    }
 }
+
+

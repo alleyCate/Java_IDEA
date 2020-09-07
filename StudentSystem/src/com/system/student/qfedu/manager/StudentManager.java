@@ -96,6 +96,13 @@ public class StudentManager {
          *              定义在类内，随着类文件的加载而出现，和对象无关，不管创建多少个StudentManager对象，
          *              都是使用一个计数器。共享资源，会导致代码出现问题。不具备对每一个类的独立性，不可以考虑！
          */
+
+        //如果发现size有效元素个数和数组的容量一直
+        if (size == allStus.length) {
+            //最小要求的当前有效元素个数+1,以为目前是添加一个元素
+            grow(size + 1);
+        }
+
         allStus[size] = student;
         size += 1;
 
@@ -107,5 +114,73 @@ public class StudentManager {
             System.out.println(allStus[i]);
         }
     }
+
+    /*
+     * 添加方法需要考虑扩容问题
+     * 添加数据时会调用当前的扩容方法
+     *      1.自动调用
+     * 是否要求类外可已使用
+     *      2.不允许类外使用，只允许在add方法发现容量不足的情况下使用
+     *      private方法
+     * 考虑最小扩容容量
+     *      3.满足当前添加操作的最小容量要求
+     *
+     * 方法分析：
+     *      private修饰，类外不能使用
+     *      非静态方法，需要使用类内的成员变量
+     *      返回值类型：
+     *          void
+     *      方法名:
+     *          grow
+     *      形式参数列表：
+     *          int minCapacity 最小容量要求
+     *
+     * 方法声明：
+     *      private void grow(int minCapacity) {}
+     *
+     * 流程：
+     *      数组的容量从基本语法要求，是不可以更改的！！！
+     *      这里需要一个新的数组
+     *      源数据数组中能够提供：
+     *          1.原始容量
+     *          2.原始数据
+     *      1.获取源数组容量
+     *      2.计算得到新数组容量，新数组容量是原数据数组的1.5倍左右
+     *      3.判断新数组容量要求是否能够满足最小容量要求
+     *      4.创建新数组
+     *      5.复制源数据数组中的内容到新数组中
+     *      6.保存新数组首地址
+     */
+
+    /**
+     * 底层保存Student数据数组扩容方法
+     *
+     * @param minCapacity 指定要求的最小容量，作为容量约束！！
+     */
+    private void grow(int minCapacity) {
+        //1.获取源数组容量
+        int oldCapacity = allStus.length;
+
+        //2.计算得到新数组容量，新数组容量是原数据数组的1.5倍左右
+        // oldCapacity >> 1 当前数据右移一位 == / 2; 但是效率搞那么一丢丢
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+
+        //3.判断新数组容量要求是否能够满足最小容量要求
+        if (minCapacity > newCapacity) {
+            newCapacity = minCapacity;
+        }
+
+        //4.创建新数组
+        Student[] temp = new Student[newCapacity];
+
+        //5.复制源数据数组中的内容到新数组中
+        for (int i = 0; i < size; i++) {
+            temp[i] = allStus[i];
+        }
+
+        //6.保存新数组首地址
+        allStus = temp;
+    }
+
 
 }

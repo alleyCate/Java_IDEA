@@ -1,7 +1,5 @@
 package Day10.d_staticMethod;
 
-import javax.xml.namespace.QName;
-
 public class Demo1 {
     public static void main(String[] args) {
         TestStatic ts = new TestStatic();

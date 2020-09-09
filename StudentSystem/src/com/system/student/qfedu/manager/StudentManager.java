@@ -1,7 +1,6 @@
 package com.system.student.qfedu.manager;
 
 import com.system.student.qfedu.entity.Student;
-import javafx.css.Size;
 
 /**
  * 学生管理类
@@ -79,31 +78,89 @@ public class StudentManager {
      * @return 添加成功返回true，失败返回false
      */
     public boolean add(Student student) {
-        /*
-         * 这里需要存储到数组的末尾，尾插法来完成的
-         * 计数器
-         *      1.数据类型 int
-         *          (a) 有效元素个数
-         *          (b) 下一次存放的位置
-         *      2.采用哪种方式
-         *          局部变量
-         *              定义在方法内部，方法调用时存在，方法运行结束，局部变量销毁，
-         *              没有复用性，没有持久性，方法下一次执行无法获取之前的数据，不能满足需求！。
-         *          成员变量
-         *              定义在类内，当前对象创建时存在，对象销毁时被销毁，当前方法也是一个成员方法，
-         *              和成员变量生存周期一致，可以满足需求！
-         *          静态成员变量
-         *              定义在类内，随着类文件的加载而出现，和对象无关，不管创建多少个StudentManager对象，
-         *              都是使用一个计数器。共享资源，会导致代码出现问题。不具备对每一个类的独立性，不可以考虑！
-         */
+//        /*
+//         * 这里需要存储到数组的末尾，尾插法来完成的
+//         * 计数器
+//         *      1.数据类型 int
+//         *          (a) 有效元素个数
+//         *          (b) 下一次存放的位置
+//         *      2.采用哪种方式
+//         *          局部变量
+//         *              定义在方法内部，方法调用时存在，方法运行结束，局部变量销毁，
+//         *              没有复用性，没有持久性，方法下一次执行无法获取之前的数据，不能满足需求！。
+//         *          成员变量
+//         *              定义在类内，当前对象创建时存在，对象销毁时被销毁，当前方法也是一个成员方法，
+//         *              和成员变量生存周期一致，可以满足需求！
+//         *          静态成员变量
+//         *              定义在类内，随着类文件的加载而出现，和对象无关，不管创建多少个StudentManager对象，
+//         *              都是使用一个计数器。共享资源，会导致代码出现问题。不具备对每一个类的独立性，不可以考虑！
+//         */
+//
+//        //如果发现size有效元素个数和数组的容量一直
+//        if (size == allStus.length) {
+//            //最小要求的当前有效元素个数+1,因为目前是添加一个元素
+//            grow(size + 1);
+//        }
+//
+//        allStus[size] = student;
+//        size += 1;
 
-        //如果发现size有效元素个数和数组的容量一直
+        //调用指定下标位置插入元素的方法，只不过指定下标位置是size
+        //等价于尾插法
+        add(size, student);
+
+        return true;
+    }
+
+    /*
+     * 需求
+     *      在指定下标位置添加指定学生类对象
+     * 方法分析：
+     *      权限修饰符：public
+     *      非静态修饰，需要使用类内非静态成员
+     *      返回值类型：boolean
+     *      方法名：add 方法的重载机制，方法参数不一致，满足重载要求
+     *      形式参数列表：
+     *          1.指定下标位置：0 <= index <= size
+     *          2.指定的Student类对象
+     * 方法声明：
+     *      public boolean add(int index, Studetn stu) {}
+     */
+    /**
+     * 在指定下标位置添加指定元素
+     *
+     * @param index 指定的下标位置， 0 <= index <= size
+     * @param stu Student类对象
+     * @return 添加成功返回true，失败返回false
+     */
+    public boolean add(int index, Student stu) {
+        //判断用户传入点的index数据是否合法
+        if (index > size || index < 0) {
+            System.out.println("Input Parameter is Invalid");
+            return false;
+        }
+
+        //容量不足可以扩容操作
         if (size == allStus.length) {
-            //最小要求的当前有效元素个数+1,以为目前是添加一个元素
             grow(size + 1);
         }
 
-        allStus[size] = student;
+        /*
+         * 1 3 5 7 9 0
+         *
+         * index = 2 添加元素10
+         * ==> 1 3 10 5 7 9
+         *
+         * allStus[5] = allStus[4]
+         * allStus[4] = allStus[3]
+         * allStus[3] = allStus[2]
+         */
+
+        for (int i = size; i > index; i--) {
+            allStus[i] = allStus[i - 1];
+        }
+
+        allStus[index] = stu;
         size += 1;
 
         return true;

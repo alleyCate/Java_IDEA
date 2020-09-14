@@ -2,6 +2,8 @@ package com.system.student.qfedu.manager;
 
 import com.system.student.qfedu.entity.Student;
 
+import java.util.Scanner;
+
 /**
  * 学生管理类
  *
@@ -124,7 +126,7 @@ public class StudentManager {
      *          1.指定下标位置：0 <= index <= size
      *          2.指定的Student类对象
      * 方法声明：
-     *      public boolean add(int index, Studetn stu) {}
+     *      public boolean add(int index, Student stu)
      */
     /**
      * 在指定下标位置添加指定元素
@@ -166,6 +168,158 @@ public class StudentManager {
         return true;
     }
 
+    /*
+     * 需求
+     *      根绝学生的ID号，删除对应的学生信息
+     * 方法分析：
+     *      权限修饰符：public
+     *      非静态成员方法
+     *      返回值类型：Student 类对象，删除的Student类对象，可以用于后期的数据暂存服务，给用户提供一个可以缓冲的余地
+     *      方法名：remove 移除
+     *      形式参数列表：
+     *          1.Student ID号
+     *          2.int id
+     * 方发声明
+     *      public Student remove(int id)
+     *
+     */
+
+    /**
+     * 根据学生ID号，删除对应的学生信息
+     *
+     * @param id 指定的学生ID
+     * @return 被删除的学生类对象，如果删除失败，返回null
+     */
+    public Student reovew(int id) {
+        //调用类内私有化方法，提供指定ID对应的下标位置
+        int index = findIndexId(id);
+
+        Student stu = null;
+
+        if (index >= 0) {
+            //保留被删除的学生信息
+            stu = allStus[index];
+            //删除操作
+            for (int i = index; i < size - 1; i++) {
+                allStus[i] = allStus[i + 1];
+            }
+
+            //保证原本最后一个有效元素内容==null
+            allStus[size - 1] = null;
+            //删除一个元素之后，有效元素格式 -1
+            size -= 1;
+        }
+
+        return stu;
+    }
+
+    /*
+     * 需求：
+     *      修改指定ID学生的信息
+     * 方法分析：
+     *      权限修饰符：public
+     *      非静态成员方法
+     *      返回值类型：boolean 操作成功返回true 失败返回false
+     *      方法名：modify 修改
+     *      形式参数列表：int id 指定的学生ID号
+     *方发声明：
+     *      public boolean modify(int id)
+     */
+
+    /**
+     *  修改指定ID学生的信息
+     *
+     * @param id 指定的学生ID
+     * @return 删除操作成功返回true，失败返回false
+     */
+    public boolean modify(int id) {
+        //调用类内私有化方法，提供指定ID对应的下标位置
+        int index = findIndexId(id);
+
+        //不存在指定元素
+        if (-1 == index) {
+            return false;
+        }
+
+        //获取指定下标的元素
+        Student stu = allStus[id];
+
+        int choose = 0;
+        //退出标记
+        boolean flag = false;
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            //展示当前Student类对象数据情况
+            System.out.println("ID:" + stu.getId());
+            System.out.println("Name:" + stu.getName() + "Age:" + stu.getAge() + "Gender:" + stu.getGender());
+            System.out.println("MathScore:" + stu.getMathScore() + "ChnScore:" + stu.getChnScore() + "EngScore:" + stu.getEngScore());
+            System.out.println("TotalScore:" + stu.getTotalScore() + "Rank:" + stu.getRank());
+            System.out.println("1.修改学生姓名");
+            System.out.println("2.修改学生年龄");
+            System.out.println("3.修改学生性别");
+            System.out.println("4.修改学生数学成绩");
+            System.out.println("5.修改学生语文成绩");
+            System.out.println("6.修改学生英语成绩");
+            System.out.println("7.退出");
+
+            choose= sc.nextInt();
+
+            switch (choose) {
+                case 1:
+                    System.out.println("请输入学生姓名");
+                    String name = sc.nextLine();
+
+                    stu.setName(name);
+                    break;
+                case 2:
+                    System.out.println("请输入学生年龄");
+                    int age = sc.nextInt();
+
+                    stu.setAge(age);
+                    break;
+                case 3:
+                    System.out.println("请输入学生性别");
+                    char gender = sc.nextLine().charAt(0);
+
+                    stu.setGender(gender);
+                    break;
+                case 4:
+                    System.out.println("请输入学生数学成绩");
+                    int mathScore = sc.nextInt();
+
+                    stu.setMathScore(mathScore);
+                    break;
+                case 5:
+                    System.out.println("请输入学生语文成绩");
+                    int chnScore = sc.nextInt();
+
+                    stu.setChnScore(chnScore);
+                    break;
+                case 6:
+                    System.out.println("请输入学生英语成绩");
+                    int engScore = sc.nextInt();
+
+                    stu.setEngScore(engScore);
+                    break;
+                case 7:
+                   flag = true;
+                    break;
+                default:
+                    System.out.println("选择有误");
+                    break;
+
+            }
+
+            if (flag) {
+                //跳出循环结构
+                break;
+            }
+        }
+
+        return true;
+    }
+
     public void show() {
         for (int i = 0; i < size; i++) {
             System.out.println(allStus[i]);
@@ -193,7 +347,7 @@ public class StudentManager {
      *          int minCapacity 最小容量要求
      *
      * 方法声明：
-     *      private void grow(int minCapacity) {}
+     *      private void grow(int minCapacity)
      *
      * 流程：
      *      数组的容量从基本语法要求，是不可以更改的！！！
@@ -239,5 +393,43 @@ public class StudentManager {
         allStus = temp;
     }
 
+    /*
+     * 需求：
+     *      发现很多地方都需要使用一个通过学生ID获取当前学生在数组中下标位置的方法。
+     * 方法分析：
+     *      权限修饰符：private 数组的下标位置是一个核心数据，如果提供给类外使用有可能会导致其他问题。该方法只有类内删除，修改，查询使用。
+     *      非静态成员方法
+     *      返回值类型：int
+     *      方法名：findIndexById
+     *      形式参数列表：int id
+     *方发声明：private int findIndexId()
+     */
+
+    /**
+     * 类内的私有化成员方法，用于根据用户指定的ID号获取对应的学生类对象在底层数组中的下标位置，提供给类内其他成员方法使用
+     *
+     * @param id 指定的学生ID号
+     * @return 如果找到学生对象返回值大于等于0，没有找到返回-1
+     */
+    private int findIndexId(int id) {
+        //参数合法性判断
+        if (id < 0) {
+            System.out.println("Input Parameter is Invalid!");
+            return -1;
+        }
+
+        //数组中的存放的学生类对象的ID比较
+        int index = -1;
+
+        //循环结束可以找到指定的下标位置
+        for (int i = 0; i < size; i++) {
+            if (allStus[i].getId() == id) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
 
 }

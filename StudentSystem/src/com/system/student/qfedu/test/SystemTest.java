@@ -42,6 +42,28 @@ public class SystemTest {
         studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
         studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
         studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(0,new Student("懒羊", 16, '男', 99, 95, 97));
+
+        studentManager.show();
+    }
+
+    @Test
+    public void testRemove() {
+        StudentManager studentManager = new StudentManager();
+
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(0,new Student("懒羊", 16, '男', 99, 95, 97));
+
+        System.out.println(studentManager.reovew(5));
 
         studentManager.show();
     }

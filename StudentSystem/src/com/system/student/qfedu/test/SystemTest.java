@@ -63,9 +63,45 @@ public class SystemTest {
         studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
         studentManager.add(0,new Student("懒羊", 16, '男', 99, 95, 97));
 
-        System.out.println(studentManager.reovew(5));
+        System.out.println(studentManager.remove(5));
 
         studentManager.show();
+    }
+
+    @Test
+    public void testModify() {
+        StudentManager studentManager = new StudentManager();
+
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student());
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(0,new Student("懒羊", 16, '男', 99, 95, 97));
+
+        studentManager.modify(6);
+
+        studentManager.show();
+    }
+
+    @Test
+    public void testSelectByAgeDesc() {
+        StudentManager studentManager = new StudentManager();
+
+        studentManager.add(new Student("懒羊", 18, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 24, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 56, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 33, '男', 99, 95, 97));
+        studentManager.add(0,new Student("懒羊", 49, '男', 99, 95, 97));
+
+        studentManager.selectByAgeDesc();
+
     }
 }
 

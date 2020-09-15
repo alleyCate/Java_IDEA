@@ -62,10 +62,8 @@ public class StudentManager {
      * 方法分析：
      *      权限修饰符 public
      *      不需要 static 修饰
-     *      返回值类型：
-     *          添加成功返回true，失败返回false
-     *      方法名：
-     *          add
+     *      返回值类型：boolean 添加成功返回true，失败返回false
+     *      方法名：add
      *      形式参数列表：
      *          Student类对象
      *          (Student student)
@@ -190,7 +188,7 @@ public class StudentManager {
      * @param id 指定的学生ID
      * @return 被删除的学生类对象，如果删除失败，返回null
      */
-    public Student reovew(int id) {
+    public Student remove(int id) {
         //调用类内私有化方法，提供指定ID对应的下标位置
         int index = findIndexId(id);
 
@@ -228,6 +226,8 @@ public class StudentManager {
 
     /**
      *  修改指定ID学生的信息
+     *  问题：
+     *      当前方法的行数超出要求的代码行数80行！！！
      *
      * @param id 指定的学生ID
      * @return 删除操作成功返回true，失败返回false
@@ -264,6 +264,8 @@ public class StudentManager {
             System.out.println("7.退出");
 
             choose= sc.nextInt();
+            //出去输入之后的/n
+            sc.nextLine();
 
             switch (choose) {
                 case 1:
@@ -320,6 +322,82 @@ public class StudentManager {
         return true;
     }
 
+    /*
+     * 需求：
+     *      根据指定的ID获取Student类对象
+     * 方法分析：
+     *      权限修饰符：public
+     *      非静态成员方法
+     *      返回值类型： Student类对象
+     *      方法名：add
+     *      形式参数列表： int id 用户指定ID
+     * 方发声明：
+     *      public Student get(int id)
+     */
+
+    /**
+     * 根据指定的ID号，返回对应Student类对象
+     *
+     * @param id 指定的ID号
+     * @return 找到返回对应的Student类对象，没有找到返回null
+     */
+    public Student get(int id) {
+        int index = findIndexId(id);
+
+        return index >= 0 ? allStus[index] : null;
+    }
+
+    /*
+     * 排序算法
+     * 需求：
+     *      数学成绩降序排序
+     * 方法分析：
+     *      权限修饰符：public
+     *      非静态成员方法
+     *      返回值类型：void
+     *      方法名：selectByAgeDesc
+     *      形式参数列表：不需要参数
+     * 方法声明：
+     *      public void selectByAgeDesc()
+     */
+
+    /**
+     * 根据年龄降序完成排序展示数据
+     */
+    public void selectByAgeDesc() {
+        //这里不能在源数据数组中进行排序，需要保护数据，拷贝一个新数组
+        Student[] sortTemp = new Student[size];
+
+        for (int i= 0; i < sortTemp.length; i++) {
+            sortTemp[i] = allStus[i];
+        }
+
+        //选择排序算法
+        for (int i = 0; i < size - 1; i ++) {
+            int index = i;
+
+            for (int j = i + 1; j < size; j++) {
+                //两个学生类对象中的年龄比较
+                if (sortTemp[index].getAge() < sortTemp[j].getAge()) {
+                    index = j;
+                }
+            }
+
+            if (index != i) {
+                Student temp = sortTemp[index];
+                sortTemp[index] = sortTemp[i];
+                sortTemp[i] = temp;
+            }
+
+        }
+
+        //展示数据的过程
+        for (int i = 0; i < sortTemp.length; i++) {
+            System.out.println(sortTemp[i]);
+        }
+
+    }
+
     public void show() {
         for (int i = 0; i < size; i++) {
             System.out.println(allStus[i]);
@@ -339,12 +417,9 @@ public class StudentManager {
      * 方法分析：
      *      private修饰，类外不能使用
      *      非静态方法，需要使用类内的成员变量
-     *      返回值类型：
-     *          void
-     *      方法名:
-     *          grow
-     *      形式参数列表：
-     *          int minCapacity 最小容量要求
+     *      返回值类型： void
+     *      方法名: grow
+     *      形式参数列表： int minCapacity 最小容量要求
      *
      * 方法声明：
      *      private void grow(int minCapacity)

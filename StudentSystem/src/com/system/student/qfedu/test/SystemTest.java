@@ -48,7 +48,7 @@ public class SystemTest {
     }
 
     @Test
-    public void testRemove() {
+    public void testRemove() throws StudentManager.StudentIdParameterException {
         StudentManager studentManager = new StudentManager();
 
         studentManager.add(new Student());
@@ -69,7 +69,7 @@ public class SystemTest {
     }
 
     @Test
-    public void testModify() {
+    public void testModify() throws StudentManager.StudentIdParameterException {
         StudentManager studentManager = new StudentManager();
 
         studentManager.add(new Student());
@@ -84,7 +84,7 @@ public class SystemTest {
         studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
         studentManager.add(0,new Student("懒羊", 16, '男', 99, 95, 97));
 
-        studentManager.modify(6);
+        studentManager.modify(-5);
 
         studentManager.show();
     }

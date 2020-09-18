@@ -188,7 +188,7 @@ public class StudentManager {
      * @param id 指定的学生ID
      * @return 被删除的学生类对象，如果删除失败，返回null
      */
-    public Student remove(int id) {
+    public Student remove(int id) throws StudentIdParameterException {
         //调用类内私有化方法，提供指定ID对应的下标位置
         int index = findIndexId(id);
 
@@ -232,7 +232,7 @@ public class StudentManager {
      * @param id 指定的学生ID
      * @return 删除操作成功返回true，失败返回false
      */
-    public boolean modify(int id) {
+    public boolean modify(int id) throws StudentIdParameterException {
         //调用类内私有化方法，提供指定ID对应的下标位置
         int index = findIndexId(id);
 
@@ -341,7 +341,7 @@ public class StudentManager {
      * @param id 指定的ID号
      * @return 找到返回对应的Student类对象，没有找到返回null
      */
-    public Student get(int id) {
+    public Student get(int id) throws StudentIdParameterException {
         int index = findIndexId(id);
 
         return index >= 0 ? allStus[index] : null;
@@ -486,12 +486,17 @@ public class StudentManager {
      * @param id 指定的学生ID号
      * @return 如果找到学生对象返回值大于等于0，没有找到返回-1
      */
-    private int findIndexId(int id) {
-        //参数合法性判断
+    private int findIndexId(int id) throws StudentIdParameterException {
+        /*//参数合法性判断
         if (id < 0) {
             System.out.println("Input Parameter is Invalid!");
             return -1;
-        }
+        }*/
+
+        /*
+         * 参数合法性判断
+         */
+        studentIdParameterCheck(id);
 
         //数组中的存放的学生类对象的ID比较
         int index = -1;
@@ -505,6 +510,38 @@ public class StudentManager {
         }
 
         return index;
+    }
+
+    /**
+     * 自定义异常-学生ID参数异常
+     */
+    public static class StudentIdParameterException extends Exception {
+        /**
+         * 无参构造方法
+         */
+        public StudentIdParameterException() {
+
+        }
+
+        /**
+         * 带有String类型参数的构造方法
+         *
+         * @param message 描述当前的异常信息
+         */
+        public StudentIdParameterException(String message) {
+            super(message);
+        }
+    }
+
+    /**
+     * 输入参数检查方法
+     * @param id 指定的学生ID号
+     * @throws StudentIdParameterException 输入学生id参数异常
+     */
+    public static void studentIdParameterCheck(int id) throws StudentIdParameterException {
+        if (id < 0) {
+            throw new StudentIdParameterException("Input Parameter is Invalid!");
+        }
     }
 
 }

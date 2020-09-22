@@ -1,7 +1,6 @@
 package com.system.student.qfedu.manager;
 
 import com.system.student.qfedu.entity.Student;
-
 import java.util.Scanner;
 
 /**

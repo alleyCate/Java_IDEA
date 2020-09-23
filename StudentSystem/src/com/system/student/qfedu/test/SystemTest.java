@@ -1,5 +1,6 @@
 package com.system.student.qfedu.test;
 
+import com.system.student.qfedu.compare.MyComparator;
 import com.system.student.qfedu.entity.Student;
 import com.system.student.qfedu.manager.StudentManager;
 import org.junit.Test;
@@ -100,7 +101,13 @@ public class SystemTest {
         studentManager.add(new Student("懒羊", 33, '男', 99, 95, 97));
         studentManager.add(0,new Student("懒羊", 49, '男', 99, 95, 97));
 
-        studentManager.selectByAgeDesc();
+        //MyComparator接口的实现类对象作为方法参数
+        studentManager.selectSortUsingComparator(new MyComparator() {
+            @Override
+            public boolean compare(Student stu1, Student stu2) {
+                return stu1.getAge() > stu2.getAge();
+            }
+        });
 
     }
 }

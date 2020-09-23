@@ -1,5 +1,6 @@
 package com.system.student.qfedu.manager;
 
+import com.system.student.qfedu.compare.MyComparator;
 import com.system.student.qfedu.entity.Student;
 import java.util.Scanner;
 
@@ -361,9 +362,11 @@ public class StudentManager {
      */
 
     /**
-     * 根据年龄降序完成排序展示数据
+     * 选择排序算法，但是需要依赖于MyComparator接口来提供排序算法核心比较内容
+     *
+     * @param com MyComparator,遵从MyComparator接口实现类对象
      */
-    public void selectByAgeDesc() {
+    public void selectSortUsingComparator(MyComparator com) {
         //这里不能在源数据数组中进行排序，需要保护数据，拷贝一个新数组
         Student[] sortTemp = new Student[size];
 
@@ -376,8 +379,9 @@ public class StudentManager {
             int index = i;
 
             for (int j = i + 1; j < size; j++) {
-                //两个学生类对象中的年龄比较
-                if (sortTemp[index].getAge() < sortTemp[j].getAge()) {
+                //【核心比较方式】
+                //if (sortTemp[index].getAge() < sortTemp[j].getAge()) {
+                if (com.compare(sortTemp[index], sortTemp[j])) {
                     index = j;
                 }
             }

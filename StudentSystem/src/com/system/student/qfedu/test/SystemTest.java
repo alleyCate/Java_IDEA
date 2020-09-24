@@ -101,14 +101,13 @@ public class SystemTest {
         studentManager.add(new Student("懒羊", 33, '男', 99, 95, 97));
         studentManager.add(0,new Student("懒羊", 49, '男', 99, 95, 97));
 
-        //MyComparator接口的实现类对象作为方法参数
+        //MyComparator匿名内部类的匿名对象直接作为方法参数
         studentManager.selectSortUsingComparator(new MyComparator() {
             @Override
             public boolean compare(Student stu1, Student stu2) {
                 return stu1.getAge() > stu2.getAge();
             }
         });
-
     }
 }
 

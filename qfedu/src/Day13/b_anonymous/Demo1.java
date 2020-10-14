@@ -21,7 +21,7 @@ public class Demo1 {
          * 并且把该对象的空间首地址，赋值给接口A的引用数据类型变量，还有一个知识点
          * 接口的引用指向遵从接口的类对象，这就是多态
          *
-         * low
+         * low！！！
          */
         A a = new A() {
             @Override
@@ -32,7 +32,7 @@ public class Demo1 {
 
         a.test();
 
-        //匿名内部类的匿名对象直接调用实现的方法 little low
+        //匿名内部类的匿名对象直接调用实现的方法 little low！！！
         new A() {
             @Override
             public void test() {
@@ -40,7 +40,7 @@ public class Demo1 {
             }
         }.test();
 
-        //匿名内部类的匿名对象直接作为方法的参数   重击奥义！！！
+        //匿名内部类的匿名对象直接作为方法的参数   终极奥义！！！
         testInterface(new A() {
             @Override
             public void test() {

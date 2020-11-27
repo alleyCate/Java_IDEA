@@ -23,7 +23,19 @@ public class Demo1 {
          */
         Iterator<String> iterator = c.iterator();
 
+        /*
         System.out.println("当前Iterator是否可以继续运行：" + iterator.hasNext());
         System.out.println("获取当前Iterator指向元素：" + iterator.next());
+
+        iterator.remove();
+        System.out.println(c);
+        */
+
+        while (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
+        }
+
+        System.out.println(c.isEmpty());
     }
 }

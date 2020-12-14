@@ -2,7 +2,7 @@ package Day14.c_util;
 
 import java.util.Arrays;
 
-public class MyArrayList<E, list> {
+public class MyArrayList<E> {
     /**
      * 准备一个底层数组，用于存储数据内容
      */
@@ -75,7 +75,7 @@ public class MyArrayList<E, list> {
 
         ensureCapactiy(size + 1);
 
-        for (int i = size - 1; i > index; i--) {
+        for (int i = size - 1; i > index; i++) {
             elements[i] = elements[i - 1];
         }
 
@@ -99,6 +99,16 @@ public class MyArrayList<E, list> {
      * @return 添加成功返回true，添加失败返回false
      */
     public boolean addAll(MyArrayList<? extends E> list) {
+        Object[] array = list.toArray();
+        int newSize = array.length;
+
+        ensureCapactiy(size + newSize);
+
+        for (int i = size; i < newSize; i ++) {
+            elements[i + size] = array[i];
+        }
+
+        size += newSize;
         return true;
     }
 
@@ -111,7 +121,7 @@ public class MyArrayList<E, list> {
      *
      * @return 包含所有集合元素的object类型数组
      */
-    public Object toArray() {
+    public Object[] toArray() {
         // size是有效元素个数，通过该方法可以获取到一个只有当前数组中有效元素的数组
         return Arrays.copyOf(elements, size);
     }

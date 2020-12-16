@@ -104,7 +104,7 @@ public class MyArrayList<E> {
 
         ensureCapactiy(size + newSize);
 
-        for (int i = size; i < newSize; i ++) {
+        for (int i = 0; i < newSize; i++) {
             elements[i + size] = array[i];
         }
 
@@ -113,7 +113,92 @@ public class MyArrayList<E> {
     }
 
     public boolean addAll(int index, MyArrayList<? extends E> list) {
+        Object[] array = list.toArray();
+        int newSize = array.length;
+
+        ensureCapactiy(size + newSize);
+
+        for (int i = 0; i < newSize; i++) {
+            elements[i + index + newSize] = elements[i + index];
+            elements[i + index] = array[i];
+        }
+
+        size += newSize;
         return true;
+    }
+
+    /**
+     * 删除指定元素
+     * @param obj 指定删除的元素
+     * @return 删除成功返回true
+     */
+    public boolean remove(Object obj) {
+        int indexOf = indexOf(obj);
+
+        return null != remove(indexOf);
+    }
+
+    /**
+     * 删除指定下标元素
+     * @param index 指定的下标范围
+     * @return 删除成功返回对应元素，失败返回null
+     */
+    public E remove(int index) {
+        if (-1 == index) {
+            return null;
+        }
+
+        for (int i = index; i <size - 1; i++) {
+            elements[i] = elements[i + 1];
+        }
+
+        // 原本最后一个有效元素位置上的内容赋值为null
+        elements[size] = null;
+        size -= 1;
+
+        return elements[index];
+    }
+
+    /**
+     * 查询指定元素在集合中第一次出现的下标位置
+     * @param obj 指定的元素
+     * @return 返回值大于等于0，否则返回-1
+     */
+    public int indexOf(Object obj) {
+        int index = -1;
+
+        for (int i = 0; i < size; i++) {
+            // equals 判断对象是否一致的方法
+            if (obj.equals(elements[i])) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    /**
+     * 查询指定元素在集合中最后一次出现的下标位置
+     * @param obj 指定的元素
+     * @return 返回值大于等于0，否则返回-1
+     */
+    public int lastIndexOf(Object obj) {
+        int index = -1;
+
+        for (int i = size - 1; i >= 0; i--) {
+            // equals 判断对象是否一致的方法
+            if (obj.equals(elements[i])) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    public E get() {
+
     }
 
     /**

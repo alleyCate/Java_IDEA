@@ -37,7 +37,7 @@ public class MyArrayList<E> {
      */
     public MyArrayList(int initCapacity) {
         //用户传入参数的合法性判断过程
-        if (initCapacity <= 0 || initCapacity > MAX_ARRAY_SIZE) {
+        if (initCapacity < 0 || initCapacity > MAX_ARRAY_SIZE) {
             //抛出异常
             //IllegalArgumentException 是一个 RuntimeException运行时异常的子类 不需要强制声明抛出异常
             throw new IllegalArgumentException("IllegalArgumentException : " + initCapacity);
@@ -113,6 +113,10 @@ public class MyArrayList<E> {
     }
 
     public boolean addAll(int index, MyArrayList<? extends E> list) {
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
+
         Object[] array = list.toArray();
         int newSize = array.length;
 
@@ -123,12 +127,17 @@ public class MyArrayList<E> {
             elements[i + index] = array[i];
         }
 
+        for (int i = size - 1; i > index; i--) {
+            elements[i]
+        }
+
         size += newSize;
         return true;
     }
 
     /**
      * 删除指定元素
+     *
      * @param obj 指定删除的元素
      * @return 删除成功返回true
      */
@@ -140,6 +149,7 @@ public class MyArrayList<E> {
 
     /**
      * 删除指定下标元素
+     *
      * @param index 指定的下标范围
      * @return 删除成功返回对应元素，失败返回null
      */
@@ -147,6 +157,8 @@ public class MyArrayList<E> {
         if (-1 == index) {
             return null;
         }
+
+        E e = get(index);
 
         for (int i = index; i <size - 1; i++) {
             elements[i] = elements[i + 1];
@@ -156,11 +168,12 @@ public class MyArrayList<E> {
         elements[size] = null;
         size -= 1;
 
-        return elements[index];
+        return e;
     }
 
     /**
      * 查询指定元素在集合中第一次出现的下标位置
+     *
      * @param obj 指定的元素
      * @return 返回值大于等于0，否则返回-1
      */
@@ -180,6 +193,7 @@ public class MyArrayList<E> {
 
     /**
      * 查询指定元素在集合中最后一次出现的下标位置
+     *
      * @param obj 指定的元素
      * @return 返回值大于等于0，否则返回-1
      */
@@ -197,8 +211,96 @@ public class MyArrayList<E> {
         return index;
     }
 
-    public E get() {
+    /**
+     * 获取集合中指定下标元素
+     *
+     * @param index 指定下标范围，但是不能超出有效下标范围
+     * @return 返回指定元素
+     */
+    @SuppressWarnings("unchecked")
+    public E get(int index) {
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
 
+        return (E) elements[index];
+    }
+
+    /**
+     * 替换指定下标的元素
+     *
+     * @param index 指定的下标元素，但是必须在有效范围以内
+     * @param e 符合泛型约束的对应数据类型
+     * @return 被替换的元素
+     */
+    public E set(int index, E e) {
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
+
+        E temp = get(index);
+        elements[index] = e;
+
+        return temp;
+    }
+
+    /**
+     * 判断指定元素是否存在
+     *
+     * @param obj 指定元素
+     * @return 存在返回true，不存在返回false
+     */
+    public boolean contains(Object obj) {
+        return indexOf(obj) > -1;
+    }
+
+    /**
+     * 判断指定元素子集合是否存在
+     *
+     * @param list 指定的子集合
+     * @return 存在返回true，不存在返回false
+     */
+    public boolean containsAll(MyArrayList<?> list) {
+        return false;
+    }
+
+    /**
+     * 判断集合是否为空
+     *
+     * @return 如果为空返回true，不为空返回false
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
+     * 获取当前集合中有效元素个数
+     *
+     * @return 有效元素个数
+     */
+    public int size() {
+        return size;
+    }
+
+    /**
+     *获取当前集合的子集合，截取范围是fromIndex <= n < endIndex
+     *
+     * @param fromIndex fromIndex <= endIndex 不得小于0
+     * @param endIndex endIndex >= fromIndex 不得大于size
+     * @return 截取得到的一个MyArrayList子集合对象
+     */
+    public MyArrayList<E> subList(int fromIndex, int endIndex) {
+        if (fromIndex > endIndex || fromIndex < 0 || endIndex > size) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+
+        MyArrayList<E> listTemp = new MyArrayList<E>(endIndex - fromIndex);
+
+        for (int i = fromIndex; i <endIndex; i++) {
+            listTemp.add(this.get(i));
+        }
+
+        return listTemp;
     }
 
     /**

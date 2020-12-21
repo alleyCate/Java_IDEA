@@ -112,6 +112,13 @@ public class MyArrayList<E> {
         return true;
     }
 
+    /**
+     * 添加另一个符合当前集合要求的list，到当前集合内
+     *
+     * @param index 指定插入的下标位置
+     * @param list 符合当前添加要求的另一个MyArrayList集合
+     * @return 添加成功返回true
+     */
     public boolean addAll(int index, MyArrayList<? extends E> list) {
         if (index < 0 || index > size) {
             throw new ArrayIndexOutOfBoundsException(index);
@@ -122,15 +129,24 @@ public class MyArrayList<E> {
 
         ensureCapactiy(size + newSize);
 
+/*
         for (int i = 0; i < newSize; i++) {
             elements[i + index + newSize] = elements[i + index];
             elements[i + index] = array[i];
         }
+*/
 
-        for (int i = size - 1; i > index; i--) {
-            elements[i]
+        // 移动操作
+        for (int i = size - 1; i >= index; i--) {
+            elements[i + newSize] = elements[i];
         }
 
+        // 存入另一个集合中的元素
+        for (int i = index; i < index + newSize; i++) {
+            elements[i] = elements[i - index];
+        }
+
+        // 有效元素个数需要修改
         size += newSize;
         return true;
     }

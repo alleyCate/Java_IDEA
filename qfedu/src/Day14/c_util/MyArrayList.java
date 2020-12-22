@@ -277,7 +277,16 @@ public class MyArrayList<E> {
      * @return 存在返回true，不存在返回false
      */
     public boolean containsAll(MyArrayList<?> list) {
-        return false;
+        // 判断list是否有内容，以及当前list对应的地址是不是null
+        if (null == list || list.isEmpty()) {
+            throw new NullPointerException();
+        }
+
+        // 1.计数器找出list参数集合中下标为0的元素在集合中出现的位置次数
+        int count = 0;
+
+        // 2.存储list参数集合中下标为0的元素
+        int[] indexArr = new int[this.size];
     }
 
     /**

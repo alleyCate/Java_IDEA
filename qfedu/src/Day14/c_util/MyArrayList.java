@@ -285,8 +285,44 @@ public class MyArrayList<E> {
         // 1.计数器找出list参数集合中下标为0的元素在集合中出现的位置次数
         int count = 0;
 
+        boolean flag = false;
+
         // 2.存储list参数集合中下标为0的元素
         int[] indexArr = new int[this.size];
+
+        for (int i = 0; i < this.size; i++) {
+            // 在当前集合中下标为i的元素和list参数集合中为0的元素比较
+            if (this.get(i).equals(list.get(0))) {
+                indexArr[count] = i;
+                count += 1;
+            }
+        }
+
+        // 4.判定是否存在list。get(0)的元素
+        if (0 == count) {
+            return flag;
+        }
+
+        // 5.进入循环，开始匹配
+        for (int i = 0; i < count; i++) {
+            //6. 遍历操作当前集合
+            for (int j = indexArr[i] + 1; j < indexArr[i] + this.size(); j++) {
+                int index = 1;
+
+                if (!this.get(j).equals(list.get(index))) {
+                    flag = false;
+                    break;
+                }
+
+                flag = true;
+            }
+
+            if (flag){
+                break;
+            }
+        }
+
+        return flag;
     }
 
     /**

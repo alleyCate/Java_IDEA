@@ -2,6 +2,8 @@ package com.system.student.qfedu.manager;
 
 import com.system.student.qfedu.compare.MyComparator;
 import com.system.student.qfedu.entity.Student;
+import com.system.student.qfedu.util.MyArrayList;
+
 import java.util.Scanner;
 
 /**
@@ -11,25 +13,10 @@ import java.util.Scanner;
  */
 public class StudentManager {
     /**
-     * 保存学生数据的Student类型数组
+     * 保存学生数据的MyArrayList类型集合
      * 这里只有一个数组的引用，并没有数组的真实空间
      */
-    private Student[] allStus;
-
-    /**
-     * 这里是允许的数组容量的最大值！！！
-     */
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-
-    /**
-     * 定义一个成员变量，私有化静态final修饰，描述默认初始化容量问题
-     */
-    private static final int DEFAULT_CAPACITY = 10;
-
-    /**
-     * 数组有效元素计数器，记录当前数组中有多少有效元素
-     */
-    private int size = 0;
+    private MyArrayList<Student> allStus;
 
     /**
      * 构造方法
@@ -37,7 +24,7 @@ public class StudentManager {
      */
     public StudentManager() {
         //给予初始化容量，可以保存10个学生数据
-        allStus = new Student[DEFAULT_CAPACITY];
+        allStus = new MyArrayList<>();
     }
 
     /**
@@ -47,14 +34,7 @@ public class StudentManager {
      *                                                             MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8
      */
     public StudentManager(int initCapacity) {
-        //不允许！！！
-        if (initCapacity <= 0 || initCapacity > MAX_ARRAY_SIZE) {
-            System.out.println("超出合理范围，给予一个默认的初始化容量使用");
-            allStus = new Student[DEFAULT_CAPACITY];
-        } else {
-            //满足要求，按照用户指定的容量创建对应的数组
-            allStus = new Student[initCapacity];
-        }
+        allStus = new MyArrayList<>(initCapacity);
     }
 
     /*
@@ -107,7 +87,7 @@ public class StudentManager {
 
         //调用指定下标位置插入元素的方法，只不过指定下标位置是size
         //等价于尾插法
-        add(size, student);
+        add(allStus.size(), student);
 
         return true;
     }
@@ -134,35 +114,7 @@ public class StudentManager {
      * @return 添加成功返回true，失败返回false
      */
     public boolean add(int index, Student stu) {
-        //判断用户传入点的index数据是否合法
-        if (index > size || index < 0) {
-            System.out.println("Input Parameter is Invalid");
-            return false;
-        }
-
-        //容量不足可以扩容操作
-        if (size == allStus.length) {
-            grow(size + 1);
-        }
-
-        /*
-         * 1 3 5 7 9 0
-         *
-         * index = 2 添加元素10
-         * ==> 1 3 10 5 7 9
-         *
-         * allStus[5] = allStus[4]
-         * allStus[4] = allStus[3]
-         * allStus[3] = allStus[2]
-         */
-
-        for (int i = size; i > index; i--) {
-            allStus[i] = allStus[i - 1];
-        }
-
-        allStus[index] = stu;
-        size += 1;
-
+        allStus.add(index, stu);
         return true;
     }
 
@@ -188,27 +140,11 @@ public class StudentManager {
      * @param id 指定的学生ID
      * @return 被删除的学生类对象，如果删除失败，返回null
      */
-    public Student remove(int id) throws StudentIdParameterException {
+    public Student remove(int id) {
         //调用类内私有化方法，提供指定ID对应的下标位置
-        int index = findIndexId(id);
+        int index = findIndexById(id);
 
-        Student stu = null;
-
-        if (index >= 0) {
-            //保留被删除的学生信息
-            stu = allStus[index];
-            //删除操作
-            for (int i = index; i < size - 1; i++) {
-                allStus[i] = allStus[i + 1];
-            }
-
-            //保证原本最后一个有效元素内容==null
-            allStus[size - 1] = null;
-            //删除一个元素之后，有效元素格式 -1
-            size -= 1;
-        }
-
-        return stu;
+        return allStus.remove(index);
     }
 
     /*
@@ -232,9 +168,9 @@ public class StudentManager {
      * @param id 指定的学生ID
      * @return 删除操作成功返回true，失败返回false
      */
-    public boolean modify(int id) throws StudentIdParameterException {
+    public boolean modify(int id) {
         //调用类内私有化方法，提供指定ID对应的下标位置
-        int index = findIndexId(id);
+        int index = findIndexById(id);
 
         //不存在指定元素
         if (-1 == index) {
@@ -242,7 +178,7 @@ public class StudentManager {
         }
 
         //获取指定下标的元素
-        Student stu = allStus[id];
+        Student stu = allStus.get(index);
 
         int choose = 0;
         //退出标记
@@ -341,11 +277,10 @@ public class StudentManager {
      * @param id 指定的ID号
      * @return 找到返回对应的Student类对象，没有找到返回null
      */
-    public Student get(int id) throws StudentIdParameterException {
-        int index = findIndexId(id);
+    public Student get(int id) {
+        int index = findIndexById(id);
 
-        return index >= 0 ? allStus[index] : null;
-    }
+        return allStus.get(index);
 
     /*
      * 排序算法
@@ -489,24 +424,18 @@ public class StudentManager {
      * @param id 指定的学生ID号
      * @return 如果找到学生对象返回值大于等于0，没有找到返回-1
      */
-    private int findIndexId(int id) throws StudentIdParameterException {
-        /*//参数合法性判断
-        if (id < 0) {
-            System.out.println("Input Parameter is Invalid!");
-            return -1;
-        }*/
-
+    private int findIndexById(int id) {
         /*
          * 参数合法性判断
-         */
-        studentIdParameterCheck(id);
+         */if (id < 0) {
+                throw new StudentIdParameterException("Input Parameter is Invalid!"); }
 
         //数组中的存放的学生类对象的ID比较
         int index = -1;
 
         //循环结束可以找到指定的下标位置
-        for (int i = 0; i < size; i++) {
-            if (allStus[i].getId() == id) {
+        for (int i = 0; i < allStus.size(); i++) {
+            if (allStus.get(i).getId() == id) {
                 index = i;
                 break;
             }
@@ -515,36 +444,6 @@ public class StudentManager {
         return index;
     }
 
-    /**
-     * 自定义异常-学生ID参数异常
-     */
-    public static class StudentIdParameterException extends Exception {
-        /**
-         * 无参构造方法
-         */
-        public StudentIdParameterException() {
 
-        }
-
-        /**
-         * 带有String类型参数的构造方法
-         *
-         * @param message 描述当前的异常信息
-         */
-        public StudentIdParameterException(String message) {
-            super(message);
-        }
-    }
-
-    /**
-     * 输入参数检查方法
-     * @param id 指定的学生ID号
-     * @throws StudentIdParameterException 输入学生id参数异常
-     */
-    public static void studentIdParameterCheck(int id) throws StudentIdParameterException {
-        if (id < 0) {
-            throw new StudentIdParameterException("Input Parameter is Invalid!");
-        }
-    }
 
 }

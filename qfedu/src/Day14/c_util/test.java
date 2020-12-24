@@ -1,7 +1,5 @@
 package Day14.c_util;
 
-import Day14.c_util.MyArrayList;
-
 public class test {
     public static void main(String[] args) {
         MyArrayList<String> cList = new MyArrayList<>();

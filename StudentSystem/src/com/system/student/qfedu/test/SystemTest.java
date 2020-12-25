@@ -27,6 +27,7 @@ public class SystemTest {
         System.out.println(student4);
         System.out.println(student5);
         System.out.println(student6);
+        System.out.println();
     }
 
     @Test
@@ -49,7 +50,7 @@ public class SystemTest {
     }
 
     @Test
-    public void testRemove() throws StudentManager.StudentIdParameterException {
+    public void testRemove() {
         StudentManager studentManager = new StudentManager();
 
         studentManager.add(new Student());
@@ -66,11 +67,13 @@ public class SystemTest {
 
         System.out.println(studentManager.remove(5));
 
+        System.out.println("------------------------------------------");
+
         studentManager.show();
     }
 
     @Test
-    public void testModify() throws StudentManager.StudentIdParameterException {
+    public void testModify() {
         StudentManager studentManager = new StudentManager();
 
         studentManager.add(new Student());
@@ -85,7 +88,7 @@ public class SystemTest {
         studentManager.add(new Student("懒羊", 16, '男', 99, 95, 97));
         studentManager.add(0,new Student("懒羊", 16, '男', 99, 95, 97));
 
-        studentManager.modify(-5);
+        studentManager.modify(5);
 
         studentManager.show();
     }
@@ -99,7 +102,7 @@ public class SystemTest {
         studentManager.add(new Student("懒羊", 24, '男', 99, 95, 97));
         studentManager.add(new Student("懒羊", 56, '男', 99, 95, 97));
         studentManager.add(new Student("懒羊", 33, '男', 99, 95, 97));
-        studentManager.add(0,new Student("懒羊", 49, '男', 99, 95, 97));
+        studentManager.add(new Student("懒羊", 49, '男', 99, 95, 97));
 
         //MyComparator匿名内部类的匿名对象直接作为方法参数
         studentManager.selectSortUsingComparator(new MyComparator() {

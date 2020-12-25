@@ -31,7 +31,7 @@ public class StudentManager {
      * 给予用户初始化底层保存数据的数组容量大小空间
      *
      * @param initCapacity 用户指定的初始化容量，不能小于等于0，不能大于MAX_ARRAY_SIZE
-     *                                                             MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8
+     *                     MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8
      */
     public StudentManager(int initCapacity) {
         allStus = new MyArrayList<>(initCapacity);
@@ -51,6 +51,7 @@ public class StudentManager {
      *      public boolean add(Student student)
      *
      */
+
     /**
      * 添加哟个学生类对象到底层Student数组allStus中
      *
@@ -106,11 +107,12 @@ public class StudentManager {
      * 方法声明：
      *      public boolean add(int index, Student stu)
      */
+
     /**
      * 在指定下标位置添加指定元素
      *
      * @param index 指定的下标位置， 0 <= index <= size
-     * @param stu Student类对象
+     * @param stu   Student类对象
      * @return 添加成功返回true，失败返回false
      */
     public boolean add(int index, Student stu) {
@@ -161,9 +163,9 @@ public class StudentManager {
      */
 
     /**
-     *  修改指定ID学生的信息
-     *  问题：
-     *      当前方法的行数超出要求的代码行数80行！！！
+     * 修改指定ID学生的信息
+     * 问题：
+     * 当前方法的行数超出要求的代码行数80行！！！
      *
      * @param id 指定的学生ID
      * @return 删除操作成功返回true，失败返回false
@@ -199,7 +201,7 @@ public class StudentManager {
             System.out.println("6.修改学生英语成绩");
             System.out.println("7.退出");
 
-            choose= sc.nextInt();
+            choose = sc.nextInt();
             //出去输入之后的/n
             sc.nextLine();
 
@@ -241,7 +243,7 @@ public class StudentManager {
                     stu.setEngScore(engScore);
                     break;
                 case 7:
-                   flag = true;
+                    flag = true;
                     break;
                 default:
                     System.out.println("选择有误");
@@ -282,19 +284,20 @@ public class StudentManager {
 
         return allStus.get(index);
 
-    /*
-     * 排序算法
-     * 需求：
-     *      数学成绩降序排序
-     * 方法分析：
-     *      权限修饰符：public
-     *      非静态成员方法
-     *      返回值类型：void
-     *      方法名：selectByAgeDesc
-     *      形式参数列表：不需要参数
-     * 方法声明：
-     *      public void selectByAgeDesc()
-     */
+        /*
+         * 排序算法
+         * 需求：
+         *      数学成绩降序排序
+         * 方法分析：
+         *      权限修饰符：public
+         *      非静态成员方法
+         *      返回值类型：void
+         *      方法名：selectByAgeDesc
+         *      形式参数列表：不需要参数
+         * 方法声明：
+         *      public void selectByAgeDesc()
+         */
+    }
 
     /**
      * 选择排序算法，但是需要依赖于MyComparator接口来提供排序算法核心比较内容
@@ -303,14 +306,15 @@ public class StudentManager {
      */
     public void selectSortUsingComparator(MyComparator com) {
         //这里不能在源数据数组中进行排序，需要保护数据，拷贝一个新数组
+        int size = allStus.size();
         Student[] sortTemp = new Student[size];
 
-        for (int i= 0; i < sortTemp.length; i++) {
-            sortTemp[i] = allStus[i];
+        for (int i = 0; i < sortTemp.length; i++) {
+            sortTemp[i] = allStus.get(i);
         }
 
         //选择排序算法
-        for (int i = 0; i < size - 1; i ++) {
+        for (int i = 0; i < size - 1; i++) {
             int index = i;
 
             for (int j = i + 1; j < size; j++) {
@@ -337,74 +341,11 @@ public class StudentManager {
     }
 
     public void show() {
-        for (int i = 0; i < size; i++) {
-            System.out.println(allStus[i]);
+        for (int i = 0; i < allStus.size(); i++) {
+            System.out.println(allStus.get(i));
         }
     }
 
-    /*
-     * 添加方法需要考虑扩容问题
-     * 添加数据时会调用当前的扩容方法
-     *      1.自动调用
-     * 是否要求类外可已使用
-     *      2.不允许类外使用，只允许在add方法发现容量不足的情况下使用
-     *      private方法
-     * 考虑最小扩容容量
-     *      3.满足当前添加操作的最小容量要求
-     *
-     * 方法分析：
-     *      private修饰，类外不能使用
-     *      非静态方法，需要使用类内的成员变量
-     *      返回值类型： void
-     *      方法名: grow
-     *      形式参数列表： int minCapacity 最小容量要求
-     *
-     * 方法声明：
-     *      private void grow(int minCapacity)
-     *
-     * 流程：
-     *      数组的容量从基本语法要求，是不可以更改的！！！
-     *      这里需要一个新的数组
-     *      源数据数组中能够提供：
-     *          1.原始容量
-     *          2.原始数据
-     *      1.获取源数组容量
-     *      2.计算得到新数组容量，新数组容量是原数据数组的1.5倍左右
-     *      3.判断新数组容量要求是否能够满足最小容量要求
-     *      4.创建新数组
-     *      5.复制源数据数组中的内容到新数组中
-     *      6.保存新数组首地址
-     */
-
-    /**
-     * 底层保存Student数据数组扩容方法
-     *
-     * @param minCapacity 指定要求的最小容量，作为容量约束！！
-     */
-    private void grow(int minCapacity) {
-        //1.获取源数组容量
-        int oldCapacity = allStus.length;
-
-        //2.计算得到新数组容量，新数组容量是原数据数组的1.5倍左右
-        // oldCapacity >> 1 当前数据右移一位 == / 2; 但是效率搞那么一丢丢
-        int newCapacity = oldCapacity + (oldCapacity >> 1);
-
-        //3.判断新数组容量要求是否能够满足最小容量要求
-        if (minCapacity > newCapacity) {
-            newCapacity = minCapacity;
-        }
-
-        //4.创建新数组
-        Student[] temp = new Student[newCapacity];
-
-        //5.复制源数据数组中的内容到新数组中
-        for (int i = 0; i < size; i++) {
-            temp[i] = allStus[i];
-        }
-
-        //6.保存新数组首地址
-        allStus = temp;
-    }
 
     /*
      * 需求：
@@ -427,11 +368,14 @@ public class StudentManager {
     private int findIndexById(int id) {
         /*
          * 参数合法性判断
-         */if (id < 0) {
-                throw new StudentIdParameterException("Input Parameter is Invalid!"); }
+         */
+        if (id < 0) {
+            throw new ArrayIndexOutOfBoundsException("Input Parameter is Invalid!");
+        }
 
         //数组中的存放的学生类对象的ID比较
         int index = -1;
+        int size = allStus.size();
 
         //循环结束可以找到指定的下标位置
         for (int i = 0; i < allStus.size(); i++) {
@@ -440,10 +384,8 @@ public class StudentManager {
                 break;
             }
         }
-
         return index;
     }
-
-
-
 }
+
+

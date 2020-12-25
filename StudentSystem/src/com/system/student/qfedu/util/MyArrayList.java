@@ -79,7 +79,7 @@ public class MyArrayList<E> {
 
         ensureCapactiy(size + 1);
 
-        for (int i = size - 1; i > index; i++) {
+        for (int i = size - 1; i > index; i--) {
             elements[i] = elements[i - 1];
         }
 

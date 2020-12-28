@@ -280,7 +280,7 @@ public class MyArrayList<E> {
      * @param list 指定的子集合
      * @return 存在返回true，不存在返回false
      */
-    public boolean containsAll(MyArrayList<?> list) {
+    public boolean containsAll(Day14.c_util.MyArrayList<?> list) {
         // 判断list是否有内容，以及当前list对应的地址是不是null
         if (null == list || list.isEmpty()) {
             throw new NullPointerException();
@@ -310,10 +310,10 @@ public class MyArrayList<E> {
         // 5.进入循环，开始匹配
         for (int i = 0; i < count; i++) {
             //6. 遍历操作当前集合
-            for (int j = indexArr[i] + 1; j < indexArr[i] + this.size(); j++) {
+            for (int j = indexArr[i] + 1; j < indexArr[i] + list.size(); j++) {
                 int index = 1;
 
-                if (!this.get(j).equals(list.get(index))) {
+                if (!this.get(j).equals(list.get(index++))) {
                     flag = false;
                     break;
                 }

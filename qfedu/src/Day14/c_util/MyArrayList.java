@@ -306,10 +306,10 @@ public class MyArrayList<E> {
         // 5.进入循环，开始匹配
         for (int i = 0; i < count; i++) {
             //6. 遍历操作当前集合
-            for (int j = indexArr[i] + 1; j < indexArr[i] + this.size(); j++) {
+            for (int j = indexArr[i] + 1; j < indexArr[i] + list.size(); j++) {
                 int index = 1;
 
-                if (!this.get(j).equals(list.get(index))) {
+                if (!this.get(j).equals(list.get(index++))) {
                     flag = false;
                     break;
                 }

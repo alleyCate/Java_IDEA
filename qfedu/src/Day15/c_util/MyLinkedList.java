@@ -37,6 +37,19 @@ public class MyLinkedList<E> {
          */
         Node<E> prev;
 
+        /**
+         * Node<E> 没有无参构造方法，创建对应Node对象，需要保存前后节点位置，同时需要保存需要存储的数据，在当前Node节点中
+         *
+         * @param prev 前节点位置
+         * @param element 存储元素
+         * @param next 后节点位置
+         */
+        public Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.prev = prev;
+            this.next = next;
+        }
+
     }
 
     /**
@@ -53,6 +66,19 @@ public class MyLinkedList<E> {
      * @return 添加成功返回true，失败返回false
      */
     public boolean add(E e) {
+        //最后一个节点位置，当前Node节点之后的存储位置
+        Node<E> l = last;
+
+        //创建得到一个新的node节点
+        Node<E> newNode = new Node<>(l, e, null);
+
+        // 因为当前元素需要保存到LinkedList结尾last一定要被赋值newNode
+        last = newNode;
+
+        // 第一个有效节点时，first同时指向当前节点
+        if (null == first) {
+            first = newNode;
+        }
 
     }
 

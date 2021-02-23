@@ -35,7 +35,7 @@ public class MyLinkedList<E> {
         Node<E> next;
 
         /**
-         * 上一个Node节点引用，保存下一个节点的空间首地址
+         * 上一个Node节点引用，保存上一个节点的空间首地址
          */
         Node<E> prev;
 
@@ -162,7 +162,7 @@ public class MyLinkedList<E> {
     }
 
     /**
-     * 获取制定下标(指定计数，第几个节点内存储的元素)
+     * 获取指定下标(指定计数，第几个节点内存储的元素)
      *
      * @param index 指定的下标位置，计数
      * @return 对应元素内容
@@ -187,6 +187,71 @@ public class MyLinkedList<E> {
 
             return n.item;
         }
+    }
+
+    /**
+     * 删除最后一个元素
+     *
+     * @return 返回值是保存的被删除元素内容
+     */
+    public E removeLast() {
+        // 最后一个节点
+        Node<E> l = last;
+        // 最后一个节点的前节点
+        Node<E> prev = last.prev;
+
+        if (null == l) {
+            throw new NoSuchElementException();
+        }
+
+        // 原最后一个节点的前节点空间地址赋值为null
+        l.prev = null;
+
+        // last指向原本最后一个节点的前节点
+        last = prev;
+
+        // 前节点为null
+        if (null == prev) {
+            first = null;
+        } else {
+            prev.next = null;
+        }
+
+        // 取出节点中保存的数据内容
+        E e = l.item;
+
+        //原最后节点内所有数据全部为null，GC更快的销毁内存
+        l.item = null;
+
+        size -= 1;
+        return e;
+    }
+
+    public E removeFirst() {
+        Node<E> f = first;
+
+        Node<E> next = first.next;
+
+        if (null == f) {
+            throw new NoSuchElementException();
+        }
+
+        f.next = null;
+
+        first = next;
+
+        if (null == next) {
+            last = null;
+        } else {
+            next.prev = null;
+        }
+
+        E e = f.item;
+
+        f.item = null;
+
+        size -= 1;
+        return e;
     }
 
     public void show() {}

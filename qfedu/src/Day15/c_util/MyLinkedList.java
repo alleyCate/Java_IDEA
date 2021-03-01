@@ -220,7 +220,7 @@ public class MyLinkedList<E> {
         // 取出节点中保存的数据内容
         E e = l.item;
 
-        //原最后节点内所有数据全部为null，GC更快的销毁内存
+        // 原最后节点内所有数据全部为null，GC更快的销毁内存
         l.item = null;
 
         size -= 1;
@@ -228,30 +228,74 @@ public class MyLinkedList<E> {
     }
 
     public E removeFirst() {
+        // 获取第一个节点
         Node<E> f = first;
-
+        // 第一个节点的后节点
         Node<E> next = first.next;
 
         if (null == f) {
             throw new NoSuchElementException();
         }
 
+        // 原第一个节点的后节点空间地址赋值为null
         f.next = null;
 
+        // first指向原本第一个节点的后节点
         first = next;
 
+        // 后节点为null
         if (null == next) {
             last = null;
         } else {
             next.prev = null;
         }
 
+        // 取出节点中保存的内容
         E e = f.item;
 
+        // 原第一个节点内所有数据为null，GC更快销毁内存
         f.item = null;
 
         size -= 1;
         return e;
+    }
+
+    /**
+     * 删除LinkedList中指定元素
+     *
+     * @param obj
+     * @return 删除成功返回true，失败返回false
+     */
+    public boolean remove(Object obj) {
+        Node<E> n = first;
+        Node<E> del = null;
+        boolean flag = false;
+
+        // 1.利用for循环，以及size有效元素个数，遍历LinkedList
+        for (int i = 0; i < size; i++) {
+            if (n.item.equals(obj)) {
+                // 保留需要删除的节点
+                del = n;
+                flag = true;
+                break;
+            }
+
+            n = n.next;
+        }
+
+        // 第一个节点和最后一个节点
+        if (null == del.prev) {
+            removeFirst();
+        } else if (null == del.next) {
+            removeLast();
+        } else {
+            Node<E> prev = del.prev;
+            Node<E> next = del.next;
+
+            prev.next = next;
+
+            del = null;
+        }
     }
 
     public void show() {}

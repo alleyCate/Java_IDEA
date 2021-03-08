@@ -263,41 +263,88 @@ public class MyLinkedList<E> {
     /**
      * 删除LinkedList中指定元素
      *
-     * @param obj
+     * @param obj 删除的指定元素
      * @return 删除成功返回true，失败返回false
      */
     public boolean remove(Object obj) {
         Node<E> n = first;
         Node<E> del = null;
-        boolean flag = false;
 
         // 1.利用for循环，以及size有效元素个数，遍历LinkedList
         for (int i = 0; i < size; i++) {
             if (n.item.equals(obj)) {
                 // 保留需要删除的节点
                 del = n;
-                flag = true;
                 break;
             }
-
             n = n.next;
         }
 
-        // 第一个节点和最后一个节点
-        if (null == del.prev) {
-            removeFirst();
-        } else if (null == del.next) {
-            removeLast();
+        return remove(del) != null;
+    }
+
+    /**
+     * 删除制定下标的节点
+     *
+     * @param index 指定下标位置
+     * @return 被删除的元素
+     */
+    public E remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        Node<E> del = null;
+        if (index < (size >> 1)) {
+            del = first;
+            for (int i = 0; i < index; i++) {
+                del = del.next;
+            }
         } else {
-            Node<E> prev = del.prev;
-            Node<E> next = del.next;
+            del = last;
+            for (int i = size - 1; i > index; i--) {
+                del = del.prev;
+            }
+        }
+
+        return remove(del);
+    }
+
+    /**
+     * 类内私有化方法，用于删除指定节点
+     *
+     * @param node 需要删除的节点
+     * @return 被删除元素对象，没有删除返回null
+     */
+    public E remove(Node<E> node) {
+        if (null == node) {
+            return null;
+        }
+
+        E e = null;
+
+        if (null == node.prev) {
+            return removeFirst();
+        } else if (null == node.next) {
+            return removeLast();
+        } else {
+            Node<E> prev = node.prev;
+            Node<E> next = node.next;
 
             prev.next = next;
+            next.prev = prev;
 
-            del = null;
+            e = node.item;
+
+            node.prev = null;
+            node.next = null;
+            node.item = null;
+
+            size -= 1;
+            return e;
         }
+
     }
 
     public void show() {}
-
 }

@@ -6,7 +6,9 @@ public class Demo1 {
         Student student2 = new Student(1, "羊驼", 16, '男');
 
         System.out.println(student1);
-
+        System.out.println(student1.hashCode());
+        System.out.println(student2);
+        System.out.println(student2.hashCode());
         boolean rel = student1.equals(student2);
         System.out.println(rel);
     }

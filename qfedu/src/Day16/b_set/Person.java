@@ -1,24 +1,26 @@
 package Day16.b_set;
 
+import java.util.Objects;
+
 public class Person {
-    private int ID;
+    private int id;
     private String name;
     private double salary;
 
     public Person() {}
 
     public Person(int ID, String name, double salary) {
-        this.ID = ID;
+        this.id = ID;
         this.name = name;
         this.salary = salary;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,6 +41,7 @@ public class Person {
 
     @Override
     public boolean equals(Object obj) {
+        System.out.println("equals方法被调用");
         if (this == obj) {
             return true;
         }
@@ -48,7 +51,7 @@ public class Person {
         }
 
         Person p = (Person) obj;
-        return this.ID == p.ID
+        return this.id == p.id
                 && this.name.equals(p.name)
                 && this.salary == p.salary;
     }
@@ -56,6 +59,15 @@ public class Person {
     @Override
     public int hashCode() {
         System.out.println("hashCode被调用");
-        return ID;
+        return Objects.hash(id, name, salary);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }

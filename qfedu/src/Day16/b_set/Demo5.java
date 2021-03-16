@@ -1,19 +1,19 @@
 package Day16.b_set;
 
+import java.util.Comparator;
 import java.util.TreeSet;
 
-public class Demo4 {
+public class Demo5 {
     public static void main(String[] args) {
-        // 存储自定义数据类型Person
-        /*
-         * Exception in thread "main" java.lang.ClassCastException: Day16.b_set.Person cannot be cast to java.base/java.lang.Comparable
-         * 提示当前Person类不能强转成Comparable类型，也就是说当前Person类没有比较方式
-         *
-         * 有两种方式可以提供比较方式：
-         *      1.Comparable<T> 接口
-         *      2.Comparator<T> 接口
-         */
-        TreeSet<Person> set = new TreeSet<>(new PersonComparator());
+        TreeSet<Person> set = new TreeSet<>(new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                System.out.println("匿名内部类");
+                int ret = (int) ((o1.getSalary() - o2.getSalary()) * 100);
+
+                return ret;
+            }
+        });
 
         Person p1 = new Person(1, "老大", 10);
         Person p2 = new Person(2, "老二", 15);

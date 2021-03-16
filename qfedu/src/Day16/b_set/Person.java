@@ -2,7 +2,7 @@ package Day16.b_set;
 
 import java.util.Objects;
 
-public class Person {
+public class Person implements Comparable<Person> {
     private int id;
     private String name;
     private double salary;
@@ -69,5 +69,20 @@ public class Person {
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        System.out.println("Comparable 接口中的 compareTo 方法被调用");
+        /*
+         * 按照工资比较
+         * 10.5 - 10.4 = 0.1 --> int == 0
+         * 这里需要考虑精度问题
+         * 10.5 - 10.4 = 0.1 * 100 --> 10.00 --> int --> 10
+         * 因为该方法是自定义完成，完全可以按照当前项目的业务逻辑来处理代码
+         */
+        int ret = (int) ((this.salary - o.salary) * 100);
+
+        return 0;
     }
 }

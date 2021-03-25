@@ -1,5 +1,6 @@
 package Day16.b_set;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.TreeSet;
 
@@ -8,10 +9,12 @@ public class Demo5 {
         TreeSet<Person> set = new TreeSet<>(new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                System.out.println("匿名内部类");
-                int ret = (int) ((o1.getSalary() - o2.getSalary()) * 100);
+                BigDecimal bd1 = new BigDecimal(o1.getSalary() + "");
+                BigDecimal bd2 = new BigDecimal(o2.getSalary() + "");
 
-                return ret;
+                BigDecimal ret = bd1.subtract(bd2).multiply(new BigDecimal("100"));
+                System.out.println(ret.intValue());
+                return ret.intValue();
             }
         });
 

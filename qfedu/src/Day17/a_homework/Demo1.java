@@ -1,5 +1,6 @@
 package Day17.a_homework;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -20,12 +21,30 @@ public class Demo1 {
 
         Person[] persons = {p1, p2, p3, p4, p5, p6};
 
+//        selectSort(persons, new Comparator<Person>() {
+//            @Override
+//            public int compare(Person o1, Person o2) {
+//                BigDecimal bd1 = new BigDecimal(o1.getSalary() + "");
+//                BigDecimal bd2 = new BigDecimal(o2.getSalary() + "");
+//
+//                BigDecimal ret = bd1.subtract(bd2).multiply(new BigDecimal("100"));
+//                System.out.println(ret.intValue());
+//                return ret.intValue();
+//            }
+//        });
+
+
         selectSort(persons, new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                if ()
+                BigDecimal bd1 = new BigDecimal(o1.getSalary() + "");
+                BigDecimal bd2 = new BigDecimal(o2.getSalary() + "");
+
+                return bd2.compareTo(bd1);
             }
         });
+
+        System.out.println(Arrays.toString(persons));
     }
 
     /*

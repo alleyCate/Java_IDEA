@@ -8,7 +8,7 @@ public class Demo8 {
         File file = new File("D:/aaa/ddd");
 
         // 使用匿名内部类的匿名对象直接作为方法参数
-        file.listFiles(new FilenameFilter(){
+        File[] listFiles = file.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 /*
@@ -23,5 +23,12 @@ public class Demo8 {
                 return new File(dir, name).isFile() && name.endsWith(".java"); // endsWith字符串方法，判断当前字符串是不是已指定要求结尾
             }
         });
+
+        // Lambda表达式 JDK1.8新特征
+        File[] listFile = file.listFiles((dir, name) -> new File(dir, name).isFile() && name.endsWith(".java"));
+
+        for (File file2 : listFile) {
+            System.out.println(file2.getName());
+        }
     }
 }

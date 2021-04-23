@@ -26,7 +26,7 @@ public class Demo1 {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
 
-        readTest1();
+        readTest2();
 
         long end = System.currentTimeMillis();
 
@@ -35,7 +35,7 @@ public class Demo1 {
 
     private static void readTest2() {
         // 1.确定读取哪一个文件
-        File file = new File("D:/aaa/1.txt");
+        File file = new File("D:/aaa/3.txt");
 
         // 2.字节输入流读取文件
         FileInputStream fileInputStream = null;

@@ -11,6 +11,24 @@ import java.io.IOException;
 
 public class Demo1 {
     public static void main(String[] args) throws IOException {
+        long start = System.currentTimeMillis();
+
+        FileInputStream fileInputStream = new FileInputStream(new File("D:/aaa/1.txt"));
+
+        int content = -1;
+
+        while ((content = fileInputStream.read()) != -1) {
+
+        }
+
+        fileInputStream.close();
+
+        long end = System.currentTimeMillis();
+        System.out.println("Time : " + (end - start));
+    }
+
+    private static void bufferedReadTest() throws IOException {
+        long start = System.currentTimeMillis();
         // 1.找到对应文件
         File file = new File("D:/aaa/1.txt");
 
@@ -32,5 +50,8 @@ public class Demo1 {
          * 并且关闭创建缓冲流使用的字节输入流对象
          */
         bis.close();
+
+        long end = System.currentTimeMillis();
+        System.out.println("Time : " + (end - start));
     }
 }

@@ -16,6 +16,14 @@ public class Demo4 {
             bw.write("摩卡咖啡");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

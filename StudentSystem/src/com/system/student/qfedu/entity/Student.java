@@ -61,6 +61,30 @@ public class Student {
         this.totalScore = mathScore + chnScore + engScore;
     }
 
+    /**
+     * 所有参数的构造方法
+     * @param id
+     * @param name
+     * @param age
+     * @param gender
+     * @param mathScore
+     * @param chnScore
+     * @param engScore
+     * @param totalScore
+     * @param rank
+     */
+    public Student(int id, String name, int age, char gender, int mathScore, int chnScore, int engScore, int totalScore, int rank) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.mathScore = mathScore;
+        this.chnScore = chnScore;
+        this.engScore = engScore;
+        this.totalScore = totalScore;
+        this.rank = rank;
+    }
+
     public int getId() {
         return id;
     }
@@ -159,5 +183,42 @@ public class Student {
                 ", totalScore=" + totalScore +
                 ", rank=" + rank +
                 '}';
+    }
+
+    /**
+     * 当前Student类对象需要保存到文件中的数据
+     *
+     * @return 返回Student需要保存到文件中的数据
+     */
+    public String getData() {
+        return "{" +
+                "," + id +
+                ",'" + name +
+                "," + age +
+                "," + gender +
+                "," + mathScore +
+                "," + chnScore +
+                "," + engScore +
+                "," + totalScore +
+                "," + rank +
+                "}";
+    }
+
+    /**
+     * 从文件中读取到count数据，并且赋值
+     *
+     * @param count 文件中保存的count数据
+     */
+    public static void setCount(int count) {
+        Student.count = count;
+    }
+
+    /**
+     * 获取Student类内的count数据，返回到方法外，用于文件中保存
+     *
+     * @return 返回值count静态成员变量数据
+     */
+    public static int getCount() {
+        return Student.count;
     }
 }

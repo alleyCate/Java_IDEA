@@ -346,6 +346,20 @@ public class StudentManager {
         }
     }
 
+    /**
+     * 返回整个StudentManager中保存的所有Student的类对象数组
+     *
+     * @return Student类对象数组
+     */
+    public Student[] getAllStudent() {
+        Student[] stus = new Student[allStus.size()];
+
+        for (int i = 0; i < stus.length; i++) {
+            stus[i] = allStus.get(i);
+        }
+
+        return stus;
+    }
 
     /*
      * 需求：

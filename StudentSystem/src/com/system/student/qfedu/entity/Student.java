@@ -192,8 +192,8 @@ public class Student {
      */
     public String getData() {
         return "{" +
-                "," + id +
-                ",'" + name +
+                id +
+                "," + name +
                 "," + age +
                 "," + gender +
                 "," + mathScore +

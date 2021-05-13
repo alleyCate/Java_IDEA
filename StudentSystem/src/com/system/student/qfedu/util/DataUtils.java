@@ -30,6 +30,7 @@ public class DataUtils {
                     //学生数据
                     String[] split = data.substring(1, data.length() - 1).split(",");
 
+                    // 解析数组中每一个元素对应的数据
                     int id = Integer.parseInt(split[0]);
                     String name = split[1];
                     int age = Integer.parseInt(split[2]);
@@ -40,10 +41,11 @@ public class DataUtils {
                     int totalScore = Integer.parseInt(split[7]);
                     int rank = Integer.parseInt(split[8]);
 
+                    //创建Student类对象，存储到StudentManager中
                     Student student = new Student(id, name, age, gender, mathScore, chnScore, engScore, totalScore, rank);
                     studentManager.add(student);
                 } else if ('c' == data.charAt(0)) {
-                    // count数据
+                    // count数据 count:10
                     Student.setCount(Integer.parseInt(data.split(":")[1]));
                 }
             }
@@ -70,10 +72,13 @@ public class DataUtils {
         BufferedWriter bw = null;
 
         try {
+            // 选择写入文件的方式是删除写！
             bw = new BufferedWriter(new FileWriter(new File("./StudentSystem/data/student.txt")));
 
+            // 获取StudentManager对象中保存的所有学生类对象数据
             Student[] allStudent = studentManager.getAllStudent();
             for (int i = 0; i < allStudent.length; i++) {
+                // 写入学生数据
                 bw.write(allStudent[i].getData());
                 bw.newLine();
             }

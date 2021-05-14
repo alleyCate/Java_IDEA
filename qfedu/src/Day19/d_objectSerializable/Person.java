@@ -10,6 +10,8 @@ public class Person implements Serializable {
     private int id;
     private String name;
     private int age;
+    // 瞬态修饰成员变量，不能被序列化
+    // private transient int age;
 
     public Person() {}
 

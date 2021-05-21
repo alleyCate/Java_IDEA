@@ -1,11 +1,13 @@
 package com.system.student.qfedu.entity;
 
+import java.io.Serializable;
+
 /**
  * 学生实体类
  *
  * @author alleyCat
  */
-public class Student {
+public class Student implements Serializable {
     /**
      * ID具有唯一性，问题1
      * 每一个类对象的ID不可重复

@@ -2,7 +2,7 @@ package Day19.c_buffered;
 
 import java.io.*;
 
-public class Demp3 {
+public class Demo3 {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
 

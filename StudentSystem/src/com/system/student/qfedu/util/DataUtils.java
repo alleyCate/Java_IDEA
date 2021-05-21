@@ -4,6 +4,7 @@ import com.system.student.qfedu.entity.Student;
 import com.system.student.qfedu.manager.StudentManager;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class DataUtils {
     /**
@@ -18,44 +19,74 @@ public class DataUtils {
          * {9,学生9,34,男,36,93,46,175,0}
          * count:10
          */
-        BufferedReader br = null;
+        ObjectInputStream objectInputStream = null;
 
         try {
-            br = new BufferedReader(new FileReader(new File("./StudentSystem/data/student.txt")));
+            objectInputStream = new ObjectInputStream(new FileInputStream("./StudentSystem/data/student.txt"));
 
-            String data = null;
+            Student[] list = (Student[]) objectInputStream.readObject();
 
-            while ((data = br.readLine()) != null) {
-                if ('{' == data.charAt(0)) {
-                    //学生数据
-                    String[] split = data.substring(1, data.length() - 1).split(",");
+            int count = -1;
 
-                    // 解析数组中每一个元素对应的数据
-                    int id = Integer.parseInt(split[0]);
-                    String name = split[1];
-                    int age = Integer.parseInt(split[2]);
-                    char gender = split[3].charAt(0);
-                    int mathScore = Integer.parseInt(split[4]);
-                    int chnScore = Integer.parseInt(split[5]);
-                    int engScore = Integer.parseInt(split[6]);
-                    int totalScore = Integer.parseInt(split[7]);
-                    int rank = Integer.parseInt(split[8]);
+            for (int i = 0; i < list.length; i++) {
 
-                    //创建Student类对象，存储到StudentManager中
-                    Student student = new Student(id, name, age, gender, mathScore, chnScore, engScore, totalScore, rank);
-                    studentManager.add(student);
-                } else if ('c' == data.charAt(0)) {
-                    // count数据 count:10
-                    Student.setCount(Integer.parseInt(data.split(":")[1]));
-                }
+                studentManager.add(list[i]);
+
+//                if ('{' == data.charAt(7)) {
+//                    //学生数据
+//                    String[] split = data.substring(1, data.length() - 1).split(",");
+//
+//                    // 解析数组中每一个元素对应的数据
+//                    int id = Integer.parseInt(split[0]);
+//                    String name = split[1];
+//                    int age = Integer.parseInt(split[2]);
+//                    char gender = split[3].charAt(0);
+//                    int mathScore = Integer.parseInt(split[4]);
+//                    int chnScore = Integer.parseInt(split[5]);
+//                    int engScore = Integer.parseInt(split[6]);
+//                    int totalScore = Integer.parseInt(split[7]);
+//                    int rank = Integer.parseInt(split[8]);
+//
+//                    //创建Student类对象，存储到StudentManager中
+//                    Student student = new Student(id, name, age, gender, mathScore, chnScore, engScore, totalScore, rank);
+//                    studentManager.add(student);
+//                } else if ('c' == data.charAt(0)) {
+//                    // count数据 count:10
+//                    Student.setCount(Integer.parseInt(data.split(":")[1]));
+//                }
             }
 
-        } catch (IOException e) {
+//            while ((data = br.readLine()) != null) {
+//                if ('{' == data.charAt(0)) {
+//                    //学生数据
+//                    String[] split = data.substring(1, data.length() - 1).split(",");
+//
+//                    // 解析数组中每一个元素对应的数据
+//                    int id = Integer.parseInt(split[0]);
+//                    String name = split[1];
+//                    int age = Integer.parseInt(split[2]);
+//                    char gender = split[3].charAt(0);
+//                    int mathScore = Integer.parseInt(split[4]);
+//                    int chnScore = Integer.parseInt(split[5]);
+//                    int engScore = Integer.parseInt(split[6]);
+//                    int totalScore = Integer.parseInt(split[7]);
+//                    int rank = Integer.parseInt(split[8]);
+//
+//                    //创建Student类对象，存储到StudentManager中
+//                    Student student = new Student(id, name, age, gender, mathScore, chnScore, engScore, totalScore, rank);
+//                    studentManager.add(student);
+//                } else if ('c' == data.charAt(0)) {
+//                    // count数据 count:10
+//                    Student.setCount(Integer.parseInt(data.split(":")[1]));
+//                }
+//            }
+
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
-            if (br != null) {
+            if (objectInputStream != null) {
                 try {
-                    br.close();
+                    objectInputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -69,27 +100,23 @@ public class DataUtils {
      * @param studentManager 学生管理类对象
      */
     public static void saveData(StudentManager studentManager) {
-        BufferedWriter bw = null;
+        ObjectOutputStream objectOutputStream = null;
 
         try {
             // 选择写入文件的方式是删除写！
-            bw = new BufferedWriter(new FileWriter(new File("./StudentSystem/data/student.txt")));
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream("./StudentSystem/data/student.txt"));
 
             // 获取StudentManager对象中保存的所有学生类对象数据
-            Student[] allStudent = studentManager.getAllStudent();
-            for (int i = 0; i < allStudent.length; i++) {
-                // 写入学生数据
-                bw.write(allStudent[i].getData());
-                bw.newLine();
-            }
+            Student[] list = studentManager.getAllStudent();
+            objectOutputStream.writeObject(list);
 
-            bw.write("count:" + Student.getCount());
+            objectOutputStream.writeObject("count:" + Student.getCount());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (bw != null) {
+            if (objectOutputStream != null) {
                 try {
-                    bw.close();
+                    objectOutputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -13,12 +13,26 @@ public class Demo2 {
             }
         });
 
-        // 给予Thread类构造方法Runnable接口实现类对象
+        // 给予Thread类构造方法Runnable接口实现类对象，并且约定名字
         Thread thread4 = new Thread(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Anonymous Inner Type");
             }
         }, "匿名内部类对象");
+
+        System.out.println(thread1);
+        System.out.println(thread2);
+        System.out.println(thread3);
+        System.out.println(thread4);
+
+        /*
+        Thread[Thread-0,5,main]
+        Thread[测试线程,5,main]
+        Thread[Thread-1,5,main]
+        Thread[匿名内部类对象,5,main]
+
+        Thread[ThreadName, ThreadPriority, ThreadGroup]
+        */
     }
 }

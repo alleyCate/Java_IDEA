@@ -18,7 +18,7 @@ public class Demo2 {
 
 /**
  * 自定义售票线程类
- *
+ * 使用同步方法来完成对于线程安全问题的解决
  * @author zy
  */
 class SingleThread1 implements Runnable {
@@ -29,18 +29,20 @@ class SingleThread1 implements Runnable {
     @Override
     public void run() {
         while(true) {
-            if (ticket > 0) {
-                System.out.println(Thread.currentThread().getName() + "售出了" + ticket + "张票");
-                ticket -= 1;
+            synchronized ("锁") {
+                if (ticket > 0) {
+                    System.out.println(Thread.currentThread().getName() + "售出了" + ticket + "张票");
+                    ticket -= 1;
 
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println(Thread.currentThread().getName() + "售罄");
+                    break;
                 }
-            } else {
-                System.out.println(Thread.currentThread().getName() + "售罄");
-                break;
             }
         }
     }

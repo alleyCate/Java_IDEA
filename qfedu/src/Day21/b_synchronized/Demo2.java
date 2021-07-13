@@ -1,4 +1,4 @@
-package Day21.b_thred;
+package Day21.b_synchronized;
 
 /*
  * 共享资源冲突问题
